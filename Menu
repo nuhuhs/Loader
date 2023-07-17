@@ -1,4 +1,6 @@
-pcall(function ()
+pcall(function()
+repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild('ScreenGui') and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild('ScreenGui'):FindFirstChild('Play')
     firesignal(game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Play.MouseButton1Click)
+    wait(1)
     firesignal(game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Sail.MouseButton1Click)
 end)
