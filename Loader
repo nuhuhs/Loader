@@ -11,6 +11,3 @@ local supported = {
 print(game.PlaceId)
 
 if supported[game.PlaceId] then pcall(function() loadstring(game:HttpGet(supported[game.PlaceId]))() end) end
-
-queue_on_teleport(
-    "loadstring(game:HttpGet('https://raw.githubusercontent.com/nuhuhs/Loader/main/Loader'))()")
