@@ -1,0 +1,16 @@
+repeat wait() until game:IsLoaded()
+
+local supported = {
+    -- GPO Main Game
+    [7465136166] = "https://raw.githubusercontent.com/nuhuhs/Loader/main/GPO%20Main%20Game",
+    -- GPO Menu
+    [1730877806] = "https://raw.githubusercontent.com/nuhuhs/Loader/main/Menu",
+
+}
+
+print(game.PlaceId)
+
+if supported[game.PlaceId] then pcall(function() loadstring(game:HttpGet(supported[game.PlaceId]))() end) end
+
+queue_on_teleport(
+    "repeat wait() until game:IsLoaded() local supported = {[4669435504] = 'https://raw.githubusercontent.com/nuhuhs/Loader/main/GPO%20Main%20Game',[1730877806] = 'https://raw.githubusercontent.com/nuhuhs/Loader/main/Menu',} if supported[game.GameId] then pcall(function() loadstring(game:HttpGet(supported[game.gameId]))() end) end")
