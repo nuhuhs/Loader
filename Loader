@@ -3,6 +3,7 @@ repeat wait() until game:IsLoaded()
 local supported = {
     -- GPO Main Game
     [7465136166] = "https://raw.githubusercontent.com/nuhuhs/Loader/main/GPO%20Main%20Game",
+    [3978370137] = "https://raw.githubusercontent.com/nuhuhs/Loader/main/GPO%20Main%20Game",
     -- GPO Menu
     [1730877806] = "https://raw.githubusercontent.com/nuhuhs/Loader/main/Menu",
 
