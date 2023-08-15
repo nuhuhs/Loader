@@ -8,6 +8,8 @@ local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))();
 local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))();
 local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))();
 
+local client = game.Players.LocalPlayer
+
 local Window = Library:CreateWindow({
 
     Title = 'Polaris || Rejoiner',
@@ -18,7 +20,14 @@ local Window = Library:CreateWindow({
 
 });
 
-
+local vim = game:GetService('VirtualInputManager');
+function pressKey(key)
+    pcall(function()
+        vim:SendKeyEvent(true, Enum.KeyCode[key], false, game)
+        wait()
+        vim:SendKeyEvent(false, Enum.KeyCode[key], false, game)
+    end)
+end
 
 local Tabs = {
     Main = Window:AddTab('Main'),
@@ -47,28 +56,29 @@ Main:AddToggle('autoRejoin', {
     Default = false,
 
     Callback = function(Value)
+        wait(1)
         if Value then
             if psCode then
-                pcall(function()
-                    local textbox = game:GetService("Players").LocalPlayer.PlayerGui.reserved.Frame.CodeBox.TextBox;
-
-                    textbox.Finished = false;
-                    textbox.Text = psCode;
-                    
-                    repeat
-                        wait()
-                        pcall(function()
-                            if game:GetService("Players").LocalPlayer.PlayerGui.chooseType.Frame.regular ~= nil then
-                                ee = true;
-                            end
-                        end)
-                    until ee
-
-                    wait(0.5)
-
-                    firesignal(game:GetService("Players").LocalPlayer.PlayerGui.chooseType.Frame.regular
-                        .MouseButton1Click)
-                end)
+                repeat
+                    wait()
+                until client:FindFirstChild('PlayerGui') and client:FindFirstChild('PlayerGui'):FindFirstChild('ScreenGui') and client:FindFirstChild('PlayerGui'):FindFirstChild('ScreenGui'):FindFirstChild('reserve')
+                firesignal(client:FindFirstChild('PlayerGui'):FindFirstChild('ScreenGui'):FindFirstChild(
+                    'reserve').MouseButton1Click)
+                task.wait()
+                game:GetService("Players").LocalPlayer.PlayerGui.reserved.Frame.CodeBox.TextBox:CaptureFocus()
+                task.wait()
+                game:GetService("Players").LocalPlayer.PlayerGui.reserved.Frame.CodeBox.TextBox.Text = psCode
+                pressKey('Enter')
+                repeat
+                    wait()
+                    pcall(function()
+                        if game:GetService("Players").LocalPlayer.PlayerGui.chooseType.Frame.regular ~= nil then
+                            ee = true;
+                        end
+                    end)
+                until ee
+                firesignal(game:GetService("Players").LocalPlayer.PlayerGui.chooseType.Frame.regular
+                    .MouseButton1Click)
             else
                 repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild('ScreenGui') and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild('ScreenGui'):FindFirstChild('Play')
 
