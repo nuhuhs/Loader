@@ -1,8 +1,6 @@
 -- Main Menu GPO
 
-wait(5)
-
-repeat wait() until game:IsLoaded()
+repeat wait() until game:IsLoaded() and game:GetService("Players").LocalPlayer:FindFirstChild('Loaded') and game:GetService("Players").LocalPlayer:FindFirstChild('Loaded').Value
 
 local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/';
 
