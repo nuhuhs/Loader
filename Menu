@@ -1,8 +1,90 @@
-pcall(function()
-repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild('ScreenGui') and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild('ScreenGui'):FindFirstChild('Play')
+-- Main Menu GPO
 
-while wait() do 
-    firesignal(game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Play.MouseButton1Click)
-    firesignal(game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Sail.MouseButton1Click)
-end
+repeat wait() until game:IsLoaded()
+
+local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/';
+
+local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))();
+local ThemeManager = loadstring(game:HttpGet(repo .. 'addons/ThemeManager.lua'))();
+local SaveManager = loadstring(game:HttpGet(repo .. 'addons/SaveManager.lua'))();
+
+local Window = Library:CreateWindow({
+
+    Title = 'Polaris || Rejoiner',
+    Center = false,
+    AutoShow = true,
+    TabPadding = 8,
+    MenuFadeTime = 0.25
+
+});
+
+
+
+local Tabs = {
+    Main = Window:AddTab('Main'),
+};
+
+local Main = Tabs.Main:AddLeftGroupbox('Auto Rejoin');
+
+Main:AddInput('psCode', {
+    Default = '',
+    Numeric = false, -- true / false, only allows numbers
+    Finished = true, -- true / false, only calls callback when you press enter
+
+    Text = 'Private Server',
+
+    Placeholder = 'Code Here',
+    MaxLength = 20,
+
+    Callback = function(Value)
+        getgenv().psCode = Value;
+        print(psCode)
+    end
+})
+
+Main:AddToggle('autoRejoin', {
+    Text = 'Rejoin',
+    Default = false,
+
+    Callback = function(Value)
+        if Value then
+            wait(1)
+            if psCode then
+                pcall(function()
+                    game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("reserved"):InvokeServer(
+                        tostring(
+                            psCode))
+
+                    local ee;
+                    
+                    repeat
+                        wait()
+                        pcall(function()
+                            if game:GetService("Players").LocalPlayer.PlayerGui.chooseType.Frame.RemoteEvent ~= nil then
+                                ee = true;
+                            end
+                        end)
+                    until ee
+
+                    game:GetService("Players").LocalPlayer.PlayerGui.chooseType.Frame.RemoteEvent:FireServer(true)
+                end)
+            else
+                repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild('ScreenGui') and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild('ScreenGui'):FindFirstChild('Play')
+
+                while wait() do
+                    firesignal(game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Play.MouseButton1Click)
+                    firesignal(game:GetService("Players").LocalPlayer.PlayerGui.ScreenGui.Sail.MouseButton1Click)
+                end
+            end
+        end
+    end
+})
+
+pcall(function()
+    ThemeManager:SetLibrary(Library)
+    ThemeManager:SetFolder('Polaris')
+    SaveManager:SetLibrary(Library)
+    SaveManager:SetFolder('Polaris/GPO_Menu')
+    SaveManager:BuildConfigSection(Tabs['Main'])
+    SaveManager:LoadAutoloadConfig()
 end)
