@@ -2,7 +2,7 @@
 
 repeat wait() until game:IsLoaded() and game:GetService("Players").LocalPlayer:FindFirstChild('Loaded') and game:GetService("Players").LocalPlayer:FindFirstChild('Loaded').Value
 
-wait(5)
+wait(15)
 
 local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/';
 
