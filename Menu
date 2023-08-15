@@ -51,6 +51,7 @@ Main:AddToggle('autoRejoin', {
             wait(1)
             if psCode then
                 pcall(function()
+repeat wait() until game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild('ScreenGui') and game:GetService("Players").LocalPlayer.PlayerGui:FindFirstChild('ScreenGui'):FindFirstChild('Play')
                     game:GetService("ReplicatedStorage"):WaitForChild("Events"):WaitForChild("reserved"):InvokeServer(
                         tostring(
                             psCode))
