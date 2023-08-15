@@ -28,6 +28,11 @@ function pressKey(key)
         vim:SendKeyEvent(false, Enum.KeyCode[key], false, game)
     end)
 end
+function click()
+    vim:SendMouseButtonEvent(0,0, 0, true, game, 0)
+    wait()
+    vim:SendMouseButtonEvent(0,0, 0, false, game, 0)
+end
 
 local Tabs = {
     Main = Window:AddTab('Main'),
@@ -64,15 +69,15 @@ Main:AddToggle('autoRejoin', {
                 until client:FindFirstChild('PlayerGui') and client:FindFirstChild('PlayerGui'):FindFirstChild('ScreenGui') and client:FindFirstChild('PlayerGui'):FindFirstChild('ScreenGui'):FindFirstChild('reserve')
                 firesignal(client:FindFirstChild('PlayerGui'):FindFirstChild('ScreenGui'):FindFirstChild(
                     'reserve').MouseButton1Click)
-                task.wait()
+                task.wait(1)
                 game:GetService("Players").LocalPlayer.PlayerGui.reserved.Frame.CodeBox.TextBox:CaptureFocus()
-                task.wait()
+                task.wait(1)
                 game:GetService("Players").LocalPlayer.PlayerGui.reserved.Frame.CodeBox.TextBox.Text = psCode
 
                 repeat
                     wait()
                     pcall(function()
-                        pressKey('Enter')
+                        click()
                         if game:GetService("Players").LocalPlayer.PlayerGui.chooseType.Frame.regular ~= nil then
                             ee = true;
                         end
