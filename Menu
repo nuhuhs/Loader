@@ -68,10 +68,11 @@ Main:AddToggle('autoRejoin', {
                 game:GetService("Players").LocalPlayer.PlayerGui.reserved.Frame.CodeBox.TextBox:CaptureFocus()
                 task.wait()
                 game:GetService("Players").LocalPlayer.PlayerGui.reserved.Frame.CodeBox.TextBox.Text = psCode
-                pressKey('Enter')
+
                 repeat
                     wait()
                     pcall(function()
+                        pressKey('Enter')
                         if game:GetService("Players").LocalPlayer.PlayerGui.chooseType.Frame.regular ~= nil then
                             ee = true;
                         end
